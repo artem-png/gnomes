@@ -50,6 +50,36 @@ public class MapHelper {
                     map[(int) cavePosition.x + 3][(int) cavePosition.y + 2] = 6;
                     map[(int) cavePosition.x + 4][(int) cavePosition.y + 2] = 6;
 
+                    map[(int) cavePosition.x][(int) cavePosition.y] = 5;
+                }
+                if (cave.type == 2) {
+                    if (cavePosition.y - 1 >= 0) {
+                        map[(int) cavePosition.x][(int) cavePosition.y - 1] = 6;
+                        map[(int) cavePosition.x + 1][(int) cavePosition.y - 1] = 6;
+                        map[(int) cavePosition.x + 2][(int) cavePosition.y - 1] = 6;
+                        map[(int) cavePosition.x + 3][(int) cavePosition.y - 1] = 6;
+                        map[(int) cavePosition.x + 4][(int) cavePosition.y - 1] = 6;
+                        map[(int) cavePosition.x + 5][(int) cavePosition.y - 1] = 6;
+                        map[(int) cavePosition.x + 6][(int) cavePosition.y - 1] = 6;
+                    }
+
+                    map[(int) cavePosition.x][(int) cavePosition.y + 1] = 6;
+                    map[(int) cavePosition.x + 1][(int) cavePosition.y + 1] = 6;
+                    map[(int) cavePosition.x + 2][(int) cavePosition.y + 1] = 6;
+                    map[(int) cavePosition.x + 3][(int) cavePosition.y + 1] = 6;
+                    map[(int) cavePosition.x + 4][(int) cavePosition.y + 1] = 6;
+                    map[(int) cavePosition.x + 5][(int) cavePosition.y + 1] = 6;
+                    map[(int) cavePosition.x + 6][(int) cavePosition.y + 1] = 6;
+
+                    map[(int) cavePosition.x][(int) cavePosition.y + 2] = 6;
+                    map[(int) cavePosition.x + 1][(int) cavePosition.y + 2] = 6;
+                    map[(int) cavePosition.x + 2][(int) cavePosition.y + 2] = 6;
+                    map[(int) cavePosition.x + 3][(int) cavePosition.y + 2] = 6;
+                    map[(int) cavePosition.x + 4][(int) cavePosition.y + 2] = 6;
+                    map[(int) cavePosition.x + 5][(int) cavePosition.y + 2] = 6;
+                    map[(int) cavePosition.x + 6][(int) cavePosition.y + 2] = 6;
+
+                    map[(int) cavePosition.x][(int) cavePosition.y] = 4;
                 }
             }
         }

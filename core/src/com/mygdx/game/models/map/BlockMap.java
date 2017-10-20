@@ -7,6 +7,7 @@ import com.mygdx.game.Config.Tex;
 import com.mygdx.game.models.blocks.ABlock;
 import com.mygdx.game.models.blocks.Cave;
 import com.mygdx.game.models.blocks.GroundBlock;
+import com.mygdx.game.process.GameProcess;
 
 /**
  * Created by artem on 10/9/17.
@@ -21,13 +22,27 @@ public class BlockMap implements IMap {
     float deltaY;
 
     public int[][] avaliableMap;
+    public int[][] fogMap;
 
     public BlockMap() {
         blocks = new ABlock[sizeX][sizeY];
         avaliableMap = new int[sizeX][sizeY];
+        fogMap = new int[sizeX][sizeY];
         for (int i = 0; i < sizeX; i++) {
             for (int j = 0; j < sizeY; j++) {
-                if (j == 10) continue;
+                if (j == sizeY - 1 || j == sizeY - 2 || j == sizeY - 3) {
+                    if (i > 19 && i < 21) {
+                        fillFogAround(new Vector2(i * 30 * Tex.x, j * 30 * Tex.y));
+                        continue;
+                    }
+                }
+                if (j == sizeY - 3) {
+                    if (i > 11 && i < 21) {
+                        fillFogAround(new Vector2(i * 30 * Tex.x, j * 30 * Tex.y));
+                        continue;
+                    }
+                }
+
                 GroundBlock groundBlock = new GroundBlock();
                 groundBlock.setHp(3);
                 groundBlock.setPosition(new Vector2(i * 30 * Tex.x, j * 30 * Tex.y));
@@ -42,9 +57,13 @@ public class BlockMap implements IMap {
     }
 
     public void act(SpriteBatch batch, int i, int j) {
+        if (i < 0 || j < 0) {
+            return;
+        }
         if (blocks[i][j] == null) {
 
         } else if (blocks[i][j].getHp() < 0) {
+            fillFogAround(blocks[i][j].getPosition());
             blocks[i][j] = null;
             generateAvaliableMap();
         } else {
@@ -57,7 +76,21 @@ public class BlockMap implements IMap {
         }
     }
 
+    public void actFog(SpriteBatch batch, int i, int j) {
+        if (j >= sizeY && j <= sizeY + 3 && i > 9 && i < 23) {
+            return;
+        }
+        if (i < 0 || j < 0 || i >= sizeX || j >= sizeY) {
+            batch.draw(Tex.fog, i * 30 * Tex.x, j * 30 * Tex.y, 30 * Tex.x, 30 * Tex.y);
+        } else if (fogMap[i][j] == 0) {
+            batch.draw(Tex.fog, i * 30 * Tex.x, j * 30 * Tex.y, 30 * Tex.x, 30 * Tex.y);
+        }
+    }
+
     public void actCave(SpriteBatch batch, int i, int j) {
+        if (i < 0 || j < 0) {
+            return;
+        }
         if (blocks[i][j] == null) {
 
         } else if (blocks[i][j].getHp() < 0) {
@@ -143,7 +176,53 @@ public class BlockMap implements IMap {
                         avaliableMap[i + 3][j - 1] = -99;
                         avaliableMap[i + 4][j - 1] = -99;
                     }
+                    if (cave.type == 2) {
+                        avaliableMap[i][j] = 0;
+                        avaliableMap[i + 1][j] = 0;
+                        avaliableMap[i + 2][j] = 0;
+                        avaliableMap[i + 3][j] = 0;
+                        avaliableMap[i + 4][j] = 0;
+                        avaliableMap[i + 5][j] = 0;
+                        avaliableMap[i + 6][j] = 0;
+
+                        avaliableMap[i][j + 1] = -99;
+                        avaliableMap[i + 1][j + 1] = -99;
+                        avaliableMap[i + 2][j + 1] = -99;
+                        avaliableMap[i + 3][j + 1] = -99;
+                        avaliableMap[i + 4][j + 1] = -99;
+                        avaliableMap[i + 5][j + 1] = -99;
+                        avaliableMap[i + 6][j + 1] = -99;
+
+                        avaliableMap[i][j + 2] = -99;
+                        avaliableMap[i + 1][j + 2] = -99;
+                        avaliableMap[i + 2][j + 2] = -99;
+                        avaliableMap[i + 3][j + 2] = -99;
+                        avaliableMap[i + 4][j + 2] = -99;
+                        avaliableMap[i + 5][j + 2] = -99;
+                        avaliableMap[i + 6][j + 2] = -99;
+
+                        avaliableMap[i][j - 1] = -99;
+                        avaliableMap[i + 1][j - 1] = -99;
+                        avaliableMap[i + 2][j - 1] = -99;
+                        avaliableMap[i + 3][j - 1] = -99;
+                        avaliableMap[i + 4][j - 1] = -99;
+                        avaliableMap[i + 5][j - 1] = -99;
+                        avaliableMap[i + 6][j - 1] = -99;
+                    }
                 }
+            }
+        }
+    }
+
+    public void fillFogAround(Vector2 position) {
+        int x = (int) (position.x / (30 * Tex.x));
+        int y = (int) (position.y / (30 * Tex.y));
+        for (int i = x - 2; i <= x + 2; i ++) {
+            for (int j = y - 2; j <= y + 2; j++) {
+                if (i < 0 || j < 0 || i >= sizeX || j >= sizeY) {
+                    continue;
+                }
+                fogMap[i][j] = 1;
             }
         }
     }

@@ -21,43 +21,32 @@ public class GameProcess implements IProcess{
     public static PlayerMap playerMap;
     public static EventController eventController;
     public static SpriteBatch menuBatch;
-    private DigPanelGameProcess digPanelGameProcess;
+    public static DigPanelGameProcess digPanelGameProcess;
 
     public GameProcess() {
         menuBatch = new SpriteBatch();
         playerMap = new PlayerMap();
         eventController = new EventController();
 
-        playerMap.add(new NormalPlayer(new Vector2(10, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(12, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(14, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(16, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(18, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(17, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(15, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(5, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(2, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(6, 10)));
-        playerMap.add(new NormalPlayer(new Vector2(7, 10)));
+        playerMap.add(new NormalPlayer(new Vector2(13, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(13, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(13, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(14, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(14, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(14, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(15, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(15, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(15, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(16, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(16, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(16, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(17, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(17, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(17, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(18, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(18, BlockMap.sizeY - 3)));
+        playerMap.add(new NormalPlayer(new Vector2(18, BlockMap.sizeY - 3)));
 
-//        playerMap.add(new NormalPlayer(new Vector2(8, 6)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 7)));
-//        playerMap.add(new NormalPlayer(new Vector2(10, 6)));
-//        playerMap.add(new NormalPlayer(new Vector2(10, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(9, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(7, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 9)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 3)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 4)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 5)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 6)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 7)));
-//        playerMap.add(new NormalPlayer(new Vector2(10, 6)));
-//        playerMap.add(new NormalPlayer(new Vector2(10, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(9, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(8, 10)));
-//        playerMap.add(new NormalPlayer(new Vector2(7, 10)));
 
         blockMap = new BlockMap();
         landMap = new LandMap(blockMap);
@@ -65,22 +54,12 @@ public class GameProcess implements IProcess{
     }
 
     public void act(SpriteBatch batch) {
-        long start = System.nanoTime();
-        eventController.act(batch);
-        long finish = System.nanoTime();
-        long timeConsumedMillis = (finish - start) / 100000;
-        //System.out.println(" event " + timeConsumedMillis);
-        start = System.nanoTime();
-        landMap.act(batch);
-        finish = System.nanoTime();
-        timeConsumedMillis = (finish - start) / 100000;
-        //System.out.println(" land " + timeConsumedMillis);
 
-        start = System.nanoTime();
+        landMap.act(batch);
+
+        eventController.act(batch);
+
         playerMap.act(batch);
-        finish = System.nanoTime();
-        timeConsumedMillis = (finish - start) / 100000;
-        //System.out.println(" playerMap " + timeConsumedMillis);
 
         batch.end();
         menuBatch.begin();

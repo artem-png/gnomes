@@ -14,9 +14,9 @@ import com.mygdx.game.process.GameProcess;
 
 public class DigPanelGameProcess {
     private Button showButton;
-    private boolean isShow = true;
+    public boolean isShow = true;
     private Button closeButton;
-    private boolean isClose = false;
+    public boolean isClose = false;
     private Button digButton;
     private Button caveButton;
 

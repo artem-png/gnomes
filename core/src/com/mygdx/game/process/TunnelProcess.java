@@ -25,13 +25,15 @@ public class TunnelProcess implements IProcess {
     private TunnelMap tunnelMap;
     private Button accept;
     private Button backButton;
+    private Button backButtonToMenu;
     private boolean isPressed = false;
 
     public TunnelProcess(LandMap map) {
         tunnelMap = new TunnelMap();
         landMap = map;
-        accept = new Button(Tex.acceptButton, new Vector2(715 * Tex.x, 5 * Tex.y));
-        backButton = new Button(Tex.backButton, new Vector2(5 * Tex.x, 5 * Tex.y));
+        accept = new Button(Tex.acceptButton, new Vector2(215 * Tex.x, 5 * Tex.y));
+        backButton = new Button(Tex.button_1_2, new Vector2(5 * Tex.x, 5 * Tex.y));
+        backButtonToMenu = new Button(Tex.backButton, new Vector2(110 * Tex.x, 5 * Tex.y));
         accept.setDelay(0);
         backButton.setDelay(0);
     }
@@ -44,6 +46,7 @@ public class TunnelProcess implements IProcess {
         GameProcess.menuBatch.begin();
         accept.act(GameProcess.menuBatch);
         backButton.act(GameProcess.menuBatch);
+        backButtonToMenu.act(GameProcess.menuBatch);
         GameProcess.menuBatch.end();
         batch.begin();
     }
@@ -72,7 +75,16 @@ public class TunnelProcess implements IProcess {
             backButton.isActivated = false;
             GameLayout.removeProcess();
         }
+        if (backButtonToMenu.input()) {
+            GameProcess.digPanelGameProcess.isShow = false;
+            GameProcess.digPanelGameProcess.isClose = true;
+            GameInputProcessor.isNeed = true;
+            backButton.isActivated = false;
+            GameLayout.removeProcess();
+        }
         if (accept.input()) {
+            GameProcess.digPanelGameProcess.isShow = false;
+            GameProcess.digPanelGameProcess.isClose = true;
             GameInputProcessor.isNeed = true;
             accept.isActivated = false;
             Vector<Vector2> vector2s = tunnelMap.generateDataForEvent();

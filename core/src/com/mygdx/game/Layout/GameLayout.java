@@ -8,6 +8,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.Config.Tex;
 import com.mygdx.game.Layout.input.GameInputProcessor;
+import com.mygdx.game.models.map.BlockMap;
 import com.mygdx.game.process.GameProcess;
 import com.mygdx.game.process.IProcess;
 
@@ -27,7 +28,7 @@ public class GameLayout implements ILayout {
         gameProcesses = new Vector<IProcess>();
         gameProcesses.add(new GameProcess());
         camera = new OrthographicCamera(Gdx.graphics.getWidth() * 0.5f * (float) Math.sqrt((double) Tex.x), Gdx.graphics.getHeight() * 0.5f * (float) Math.sqrt((double) Tex.x));
-        camera.position.set(500, 500, 0);
+        camera.position.set(30 * 20 * Tex.x, (BlockMap.sizeY - 2) * Tex.y * 30, 0);
         camera.zoom = 1.4f;
         camera.update();
         gameInputProcessor = new GameInputProcessor(camera);
@@ -37,13 +38,13 @@ public class GameLayout implements ILayout {
 
     @Override
     public void render(SpriteBatch batch) {
-//        long start = System.nanoTime();
+        long start = System.nanoTime();
         batch.setProjectionMatrix(camera.combined);
         camera.update();
         gameProcesses.lastElement().act(batch);
-//        long finish = System.nanoTime();
-//        long timeConsumedMillis = (finish - start) / 100000;
-//        System.out.print("gameLayout:render: " + timeConsumedMillis);
+        long finish = System.nanoTime();
+        long timeConsumedMillis = (finish - start) / 100000;
+        //System.out.println("gameLayout:render: " + timeConsumedMillis);
     }
 
     @Override

@@ -2,10 +2,8 @@ package com.mygdx.game.models.map.build;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Config.Tex;
-import com.mygdx.game.event.eventHelpers.Distance;
 import com.mygdx.game.models.map.BlockMap;
 import com.mygdx.game.models.map.IMap;
 import com.mygdx.game.models.map.MapHelper;
@@ -87,8 +85,11 @@ public class TunnelMap implements IMap {
                         );
                     }
                 }
-                if (bannedSectors[i][j] == 6) {
-                    batch.draw(Tex.bannedSector, i * 30 * Tex.x, j * 30 * Tex.y, Tex.bannedSector.getWidth(), Tex.bannedSector.getHeight());
+                if (bannedSectors[i][j] == 5) {
+                    batch.draw(Tex.bannedSectorCave3x5, i * 30 * Tex.x, j * 30 * Tex.y, Tex.bannedSectorCave3x5.getWidth(), Tex.bannedSectorCave3x5.getHeight());
+                }
+                if (bannedSectors[i][j] == 4) {
+                    batch.draw(Tex.bannedSectorCave3x7, i * 30 * Tex.x, j * 30 * Tex.y, Tex.bannedSectorCave3x7.getWidth(), Tex.bannedSectorCave3x7.getHeight());
                 }
             }
         }
@@ -100,16 +101,16 @@ public class TunnelMap implements IMap {
         for (int i = 0; i < BlockMap.sizeX; i++) {
             for (int j = 0; j < BlockMap.sizeY; j++) {
                 if (avaliableMap[i][j] == 0) {
-                    if (!nechetAndAvaliable(i - 1, j) && avaliableMap[i - 1][j] == -5 && bannedSectors[i - 1][j] != 6) {
+                    if (!nechetAndAvaliable(i - 1, j) && avaliableMap[i - 1][j] == -5 && bannedSectors[i - 1][j] == 0) {
                         sectors[i - 1][j] = 5;
                     }
-                    if (!nechetAndAvaliable(i + 1, j) && avaliableMap[i + 1][j] == -5 && bannedSectors[i + 1][j] != 6) {
+                    if (!nechetAndAvaliable(i + 1, j) && avaliableMap[i + 1][j] == -5 && bannedSectors[i + 1][j] == 0) {
                         sectors[i + 1][j] = 5;
                     }
-                    if (!nechetAndAvaliable(i, j + 1) && avaliableMap[i][j + 1] == -5 && bannedSectors[i][j + 1] != 6) {
+                    if (!nechetAndAvaliable(i, j + 1) && avaliableMap[i][j + 1] == -5 && bannedSectors[i][j + 1] == 0) {
                         sectors[i][j + 1] = 5;
                     }
-                    if (!nechetAndAvaliable(i, j - 1) && avaliableMap[i][j - 1] == -5 && bannedSectors[i][j - 1] != 6) {
+                    if (!nechetAndAvaliable(i, j - 1) && avaliableMap[i][j - 1] == -5 && bannedSectors[i][j - 1] == 0) {
                         sectors[i][j - 1] = 5;
                     }
                 }
@@ -122,16 +123,16 @@ public class TunnelMap implements IMap {
         int i = (int) vector2.x;
         int j = (int) vector2.y;
         int[][] avaliableMap = MapHelper.getAvaliableMapToTunnel();
-        if (!nechetAndAvaliable(i - 1, j) && avaliableMap[i - 1][j] == -5 && choosenSectors[i - 1][j] == 0 && bannedSectors[i - 1][j] != 6) {
+        if (!nechetAndAvaliable(i - 1, j) && avaliableMap[i - 1][j] == -5 && choosenSectors[i - 1][j] == 0 && bannedSectors[i - 1][j] == 0) {
             sectors[i - 1][j] = 5;
         }
-        if (!nechetAndAvaliable(i + 1, j) && avaliableMap[i + 1][j] == -5 && choosenSectors[i + 1][j] == 0 && bannedSectors[i + 1][j] != 6) {
+        if (!nechetAndAvaliable(i + 1, j) && avaliableMap[i + 1][j] == -5 && choosenSectors[i + 1][j] == 0 && bannedSectors[i + 1][j] == 0) {
             sectors[i + 1][j] = 5;
         }
-        if (!nechetAndAvaliable(i, j + 1) && avaliableMap[i][j + 1] == -5 && choosenSectors[i][j + 1] == 0 && bannedSectors[i][j + 1] != 6) {
+        if (!nechetAndAvaliable(i, j + 1) && avaliableMap[i][j + 1] == -5 && choosenSectors[i][j + 1] == 0 && bannedSectors[i][j + 1] == 0) {
             sectors[i][j + 1] = 5;
         }
-        if (!nechetAndAvaliable(i, j - 1) && avaliableMap[i][j - 1] == -5 && choosenSectors[i][j - 1] == 0 && bannedSectors[i][j - 1] != 6) {
+        if (!nechetAndAvaliable(i, j - 1) && avaliableMap[i][j - 1] == -5 && choosenSectors[i][j - 1] == 0 && bannedSectors[i][j - 1] == 0) {
             sectors[i][j - 1] = 5;
         }
     }
@@ -196,16 +197,16 @@ public class TunnelMap implements IMap {
         int i = (int) cell.x;
         int j = (int) cell.y;
         int[][] avaliableMap = MapHelper.getAvaliableMapToTunnel();
-        if (!nechetAndAvaliable(i - 1, j) && avaliableMap[i - 1][j] == -5 && choosenSectors[i - 1][j] == 0 && bannedSectors[i][j - 1] != 6) {
+        if (!nechetAndAvaliable(i - 1, j) && avaliableMap[i - 1][j] == -5 && choosenSectors[i - 1][j] == 0 && bannedSectors[i][j - 1] == 0) {
             sectors[i - 1][j] = 5;
         }
-        if (!nechetAndAvaliable(i + 1, j) && avaliableMap[i + 1][j] == -5 && choosenSectors[i + 1][j] == 0 && bannedSectors[i][j - 1] != 6) {
+        if (!nechetAndAvaliable(i + 1, j) && avaliableMap[i + 1][j] == -5 && choosenSectors[i + 1][j] == 0 && bannedSectors[i][j - 1] == 0) {
             sectors[i + 1][j] = 5;
         }
-        if (!nechetAndAvaliable(i, j + 1) && avaliableMap[i][j + 1] == -5 && choosenSectors[i][j + 1] == 0 && bannedSectors[i][j - 1] != 6) {
+        if (!nechetAndAvaliable(i, j + 1) && avaliableMap[i][j + 1] == -5 && choosenSectors[i][j + 1] == 0 && bannedSectors[i][j - 1] == 0) {
             sectors[i][j + 1] = 5;
         }
-        if (!nechetAndAvaliable(i, j - 1) && avaliableMap[i][j - 1] == -5 && choosenSectors[i][j - 1] == 0 && bannedSectors[i][j - 1] != 6) {
+        if (!nechetAndAvaliable(i, j - 1) && avaliableMap[i][j - 1] == -5 && choosenSectors[i][j - 1] == 0 && bannedSectors[i][j - 1] == 0) {
             sectors[i][j - 1] = 5;
         }
     }

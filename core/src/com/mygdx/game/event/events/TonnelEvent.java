@@ -2,7 +2,6 @@ package com.mygdx.game.event.events;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.event.eventHelpers.Distance;
 import com.mygdx.game.event.eventHelpers.Movement;
 import com.mygdx.game.models.map.MapHelper;
